@@ -1,0 +1,107 @@
+<!-- Intro Section -->
+<section class="hero is-success">
+    <div class="hero-body">
+        <div class="container">
+            <div class="columns">
+                <!-- NLP Info -->
+                <div class="column is-medium">
+                    <div class="content">
+                        <h2 style="color: hsl(0, 0%, 96%)">What is NLP?</h2>
+                        <p>Natural Language Processing or NLP is a way for computers to analyze, understand, and derive meaning from human language in a smart and useful way. By utilizing NLP, developers can organize and structure knowledge to perform tasks such as automatic summarization, translation, named entity recognition, relationship extraction, sentiment analysis, speech recognition, and topic segmentation. At Automation Factory, we use a combination of several cognitive tools to provide solutions that not only understand and comprehend natural language of Unilever users, but translates this language into usable actions and decisions. For example, we have developed an engine called the Knowledge Based Smart Search that reads and smartly comprehends data within Unilever documents. It then makes all the information searchable with the use of a simple natural language query. Feel free to try out and test some of our solutions provided below with your own data.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<br />
+<br />
+<div class="column">
+    <div class="content">
+        <h3>Document Analysis</h3>
+        <p>This section tries to analysis Documents and extract Keywords based on frequency and context of words in the document and also generate a quick summary of the entire document, that helps users understand the entire context with just a few sentences.</p>
+    </div>
+</div>
+<br />
+
+<div class="timeline is-centered">
+    <header class="timeline-header">
+        <span class="tag is-medium is-danger">Begin</span>
+    </header>
+    <div class="timeline-item is-danger">
+        <div class="timeline-marker is-danger is-icon">
+            <i class="fa fa-angle-double-right"></i>
+        </div>
+        <div class="timeline-content ">
+        <h3 class="">Upload Documents to Analyze <span class="tooltip is-tooltip-multiline" data-tooltip="Upload document to analyze."><i class="fa fa-info-circle" aria-hidden="true"></i></span></h3>
+        <div class="column">
+            <div class="file">
+                <label class="file-label">
+                    <input class="file-input" type="file" name="resume" (change)="onFileChange($event)">
+                    <span class="file-cta">
+                    <span class="file-icon">
+                        <i class="fas fa-upload"></i>
+                    </span>
+                    <span class="file-label">
+                        Upload your data
+                    </span>
+                    </span>
+                </label>
+            </div>
+            <br />
+            <!-- Progress Bar -->
+            <progress *ngIf="filesSelected" class="progress is-info" max="100">30%</progress>
+            <div *ngIf="filesUploadSuccessfull">
+                <div class="notification is-success">
+                    File upload successfull.
+                </div>
+            </div>
+        </div>
+        </div>
+    </div>
+    <div class="timeline-item is-danger">
+        <div class="timeline-marker is-danger is-icon">
+            <i class="fa fa-angle-double-left"></i>
+        </div>
+        <div class="timeline-content">
+            <h3 class="">Text Summarization <span class="tooltip is-tooltip-multiline" data-tooltip="Summarize the text document with the major points of the original document."><i class="fa fa-info-circle" aria-hidden="true"></i></span></h3>
+            <br />
+            <div *ngIf="filesUploadSuccessfull; else pleaseUploadTemplate">
+                <!-- Progress Bar -->
+                <progress *ngIf="isTextSummarizationGenerated" class="progress is-info" max="100">30%</progress>
+                <div class="notification is-info">
+                    <p [innerHTML]=textSummary></p>
+                </div>
+            </div>
+            <ng-template #pleaseUploadTemplate>
+                <div class="notification is-info">
+                    <p>Please upload document to begin.</p>
+                </div>
+            </ng-template>
+        </div>
+    </div>
+    <div class="timeline-item is-danger">
+        <div class="timeline-marker is-danger is-icon">
+            <i class="fa fa-angle-double-right"></i>
+        </div>
+        <div class="timeline-content">
+            <h3 class="">Key Words <span class="tooltip is-tooltip-multiline" data-tooltip="Keyword extraction can identify the key terms that best describe the subject of a document."><i class="fa fa-info-circle" aria-hidden="true"></i></span></h3>
+            <br />
+            <div *ngIf="filesUploadSuccessfull; else pleaseUploadTemplate">
+                <!-- Progress Bar -->
+                <progress *ngIf="isWordCloudGenerated" class="progress is-info" max="100">30%</progress>
+        
+                <img [src]='wordCloudBase64' height="100%" width="100%"/>
+            </div>
+            <ng-template #pleaseUploadTemplate>
+                <div class="notification is-info">
+                    <p>Please upload document to begin.</p>
+                </div>
+            </ng-template>
+        </div>
+    </div>
+    <header class="timeline-header">
+        <span class="tag is-medium is-danger">End</span>
+    </header>
+</div>

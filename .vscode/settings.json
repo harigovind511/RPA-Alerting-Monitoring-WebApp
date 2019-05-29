@@ -1,0 +1,7 @@
+{
+    "appService.deploySubpath": "",
+    "appService.zipIgnorePattern": [
+        ".vscode{,/**}"
+    ],
+    "appService.defaultWebAppToDeploy": "/subscriptions/9bacabcf-dc84-442c-8f44-6727c02a2a9b/resourceGroups/AFQnAPrototype1/providers/Microsoft.Web/sites/acsexperiencezone"
+}

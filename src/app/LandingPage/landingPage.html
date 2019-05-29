@@ -1,0 +1,154 @@
+<style>
+    .grow:hover
+    {
+        -webkit-transform: scale(1.2);
+        -ms-transform: scale(1.2);
+        transform: scale(1.2);
+        z-index: 1000;
+    }
+    @import url(https://fonts.googleapis.com/css?family=Open+Sans+Condensed:300);
+
+
+/* make keyframes that tell the start state and the end state of our object */
+@-webkit-keyframes fadeIn { from { opacity:0; } to { opacity:1; } }
+@-moz-keyframes fadeIn { from { opacity:0; } to { opacity:1; } }
+@keyframes fadeIn { from { opacity:0; } to { opacity:1; } }
+
+.fade-in {
+  opacity:0;  /* make things invisible upon start */
+  -webkit-animation:fadeIn ease-in 1;  /* call our keyframe named fadeIn, use animattion ease-in and repeat it only 1 time */
+  -moz-animation:fadeIn ease-in 1;
+  animation:fadeIn ease-in 1;
+
+  -webkit-animation-fill-mode:forwards;  /* this makes sure that after animation is done we remain at the last keyframe value (opacity: 1)*/
+  -moz-animation-fill-mode:forwards;
+  animation-fill-mode:forwards;
+
+  -webkit-animation-duration:1s;
+  -moz-animation-duration:1s;
+  animation-duration:1s;
+}
+
+.fade-in.one {
+  -webkit-animation-delay: 0.2s;
+  -moz-animation-delay: 0.2s;
+  animation-delay: 0.2s;
+}
+
+.fade-in.two {
+  -webkit-animation-delay: 0.4s;
+  -moz-animation-delay: 0.4s;
+  animation-delay: 0.4s;
+}
+
+.fade-in.three {
+  -webkit-animation-delay: 0.8s;
+  -moz-animation-delay: 0,8s;
+  animation-delay: 0,8s;
+}
+
+.fade-in.four {
+  -webkit-animation-delay: 1.2s;
+  -moz-animation-delay: 1.2s;
+  animation-delay: 1.2s;
+}
+
+.fade-in.five {
+  -webkit-animation-delay: 1.6s;
+  -moz-animation-delay: 1.6s;
+  animation-delay: 1.6s;
+}
+</style>
+
+
+<!-- Carousel Section -->
+<!-- <custom-dots></custom-dots> -->
+<br />
+
+<!-- Cards Section -->
+<section class="container">
+    <div class="columns features">
+        <div class="column is-4">
+        <div class="card is-shady grow box fade-in one">
+            <div class="card-image">
+            <figure class="image is-4by3">
+                <img src="https://www.ongraph.com/wp-content/uploads/2018/05/img1.png" alt="Placeholder image" class="modal-button" data-target="modal-image2">
+            </figure>
+            </div>
+            <div class="card-content is">
+            <div class="content">
+                <h4>Chatbots</h4>
+                <p>Chat Bots allows customers to interact with artificially intelligent system through popular messaging channels as a new way of communicating with companies.</p>
+                <a href="/chatbot" class="button is-info">Demo</a>
+            </div>
+            </div>
+        </div>
+        </div>
+        <div class="column is-4">
+        <div class="card is-shady grow fade-in two">
+            <div class="card-image">
+            <figure class="image is-4by3">
+                <img src="https://venturebeat.com/wp-content/uploads/2018/09/natural-language-processing.jpg?fit=400%2C283&strip=all" alt="Placeholder image">
+            </figure>
+            </div>
+            <div class="card-content">
+            <div class="content">
+                <h4>Natural Language Processing</h4>
+                <p>NLP technology enables artificial intelligent system to learn and act how humans interpret/analyze structured and unstructured data.</p>
+                <a href="/nlp" class="button is-info">Demo</a>
+            </div>
+            </div>
+        </div>
+        </div>
+        <div class="column is-4 modal-button" data-target="modal-image">
+        <div class="card is-shady grow fade-in three">
+            <div class="card-image">
+            <figure class="image is-4by3">
+                <img src="https://wwwadvectasse.cdn.triggerfish.cloud/uploads/2018/04/machine-learning-e1525867921119-1024x645.jpg" alt="Placeholder image">
+            </figure>
+            </div>
+            <div class="card-content">
+            <div class="content">
+                <h4>Machine Learning</h4>
+                <p>Machine Learning enables artificial intelligent system to learn trends and patters by feeding past data sets. These systems helps customers in data driven decision making in a fast and efficient way.</p>
+                <a class="button is-info">Demo</a>
+            </div>
+            </div>
+        </div>
+        </div>
+    </div>
+    <div class="columns features">
+        <div class="column is-4 modal-button" data-target="modal-card">
+        <div class="card is-shady grow fade-in four">
+            <div class="card-image">
+            <figure class="image is-4by3">
+                <img src="https://docparser.com/blog/wp-content/uploads/2017/11/what-is-OCR.png" alt="Placeholder image">
+            </figure>
+            </div>
+            <div class="card-content">
+            <div class="content">
+                <h4>Optical Character Recogintion</h4>
+                <p>OCR technology enables artificial intelligent system to extract structured and unstructured information from scanned documents.</p>
+                <a class="button is-info">Demo</a>
+            </div>
+            </div>
+        </div>
+        </div>
+        <div class="column is-4">
+        <div class="card is-shady grow  fade-in five">
+            <div class="card-image">
+            <figure class="image is-4by3">
+                <img src="https://www.position-imaging.com/wp-content/img/computer-vision.png" alt="butterfly image" class="modal-button" data-target="modal-image4">
+            </figure>
+            </div>
+            <div class="card-content  modal-button" data-target="modal-card2">
+            <div class="content">
+                <h4>Computer Vision</h4>
+                <p>Vision technology enables artificial intelligent system to identify/analyze images and videos to support E2E automation of solutions for Inventory, Logistics & Marketing platform.</p>
+                <a class="button is-info">Demo</a>
+            </div>
+            </div>
+        </div>
+        </div>
+    </div>
+</section>

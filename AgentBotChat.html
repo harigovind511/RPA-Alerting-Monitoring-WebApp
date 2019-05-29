@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8" />
+    <title>Agent Bot Chat</title>
+    <link href="https://cdn.botframework.com/botframework-webchat/latest/botchat.css" rel="stylesheet" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <script src="https://cdn.botframework.com/botframework-webchat/latest/botchat.js"></script>
+</head>
+<body>
+    <div id="BotChatGoesHere"></div>
+      
+    <script>
+        var queryData = decodeURI(window.location.search)
+                            .replace('?', '')
+                            .split('&')
+                            .map(param => param.split('='))
+                            .reduce((values, [ key, value ]) => {
+                                values[ key ] = value
+                                return values
+                            }, {});
+        var connected = false;
+        var directLineSecret ;
+        
+        if(queryData.botid == "bieno-da-q-57215-webapp-17"){
+            directLineSecret = "83Pz0LL4QHs.cwA.UZU.BedSnGP4x-HAfZ6dNEiIhyDWJWQnwyYuOe5hDGk-qPo";
+        }
+        
+        var botConnection = new BotChat.DirectLine({
+            secret: directLineSecret                    
+        });
+
+        var user = null;
+        var bot = null;
+
+        // Initializing Connection
+        startChat();
+
+        function keypressed(event) {
+            if (event.which == 13 || event.keyCode == 13) {
+                startChat();
+            }
+            return true;
+        };
+
+        function startChat() {
+            var params = BotChat.queryParams(location.search);
+
+            user = {
+                id: params.userid,
+                name: params.username
+            };
+            
+            bot = {
+                id: params['botid'] || 'botid',
+                name: params["botname"] || 'botname'
+            };
+
+            BotChat.App({
+                botConnection: botConnection,
+                user: user,
+                bot: bot
+            }, document.getElementById("BotChatGoesHere"));
+
+            botConnection
+                .postActivity({ type: "ping", from: user})
+                .subscribe(id => {
+                    // Making Agent available
+                    botConnection
+                            .postActivity({ type: "event", from: user, name: "connect" })
+                            .subscribe(id => {
+                                // Trigger Agent-User Connection
+                                var data = "[support user] " + queryData.requestUserID + " : " + queryData.conversationid;
+                                botConnection
+                                    .postActivity( { type: "message", from: user, text: data} )
+                                    .subscribe(id => {
+                                        console.log(id);
+                                    });
+                            });
+                });
+        }
+
+        function connect() {
+            var name;
+            if (!connected)
+                name = "agent";
+            else
+                name = "disconnect";
+            botConnection
+                .postActivity({ type: "event", from: user, name: name })
+                .subscribe(id => {
+                    if (id === "retry")
+                        return;
+                    console.log("success");
+                    connected = !connected;
+                    if (connected) {
+                        document.getElementById("connect").innerHTML = "Disconnect";
+                        document.getElementById("heading").innerHTML =
+                            "You are now connected to an agent.";
+                    } else {
+                        document.getElementById("connect").innerHTML = "Connect with Agent";
+                        document.getElementById("heading").innerHTML =
+                            "To chat with an agent, click on Connect button.";
+                    }
+                });
+        };
+
+        function stopConversation(){
+            botConnection
+                .postActivity({ type: "event", value: "", from: user, name: "stopConversation" })
+                .subscribe(id => console.log("success"));
+        };
+
+        function listUsers(){
+            botConnection
+                .postActivity({ type: "event", value: "list users", from: user, name: "list users"})
+                .subscribe(id => console.log("success"));
+        }
+
+        function connectToUser(userEmailId){
+            botConnection
+                .postActivity({ type: "event", value: "[Support User] hari.govind@acuvate.com", from: user, name: "[Support User] hari.govind@acuvate.com"})
+                .subscribe(id => console.log("success"));
+        }
+    </script>
+</body>
+</html>

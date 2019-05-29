@@ -1,0 +1,75 @@
+<section class="hero is-primary">
+    <div class="hero-body">
+        <div class="container">
+            <div class="columns">
+                <!-- OCR Info -->
+                <!-- NLP Info -->
+                <div class="column">
+                    <div class="content">
+                        <h2 style="color: hsl(0, 0%, 96%)">What is OCR?</h2>
+                        <p>Optical character recognition or optical character reader, often abbreviated as OCR, is the mechanical or electronic conversion of images of typed, handwritten or printed text into machine-encoded text, whether from a scanned document, a photo of a document, a scene-photo (for example the text on signs and billboards in a landscape photo) or from subtitle text superimposed on an image (for example from a television broadcast).</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<br />
+<br />
+<div class="column">
+    <div class="content">
+        <h3>Detect Characters from Images or PDF</h3>
+        <p>The below demo tries to extract textual data from Images or PDFs that are uploaded, using state of the art OCR systems..</p>
+    </div>
+</div>
+
+<br />
+<ul class="steps">
+    <li class="step-item is-danger is-completed">
+        <div class="step-marker">1</div>
+        <div class="step-details">
+        <p class="step-title">Step 1</p>
+        <p>Upload your Images or PDF.</p>
+        <div class="column">
+            <div class="file">
+                <label class="file-label">
+                    <input class="file-input" type="file" name="resume" (change)="onFileChange($event)">
+                    <span class="file-cta">
+                    <span class="file-icon">
+                        <i class="fas fa-upload"></i>
+                    </span>
+                    <span class="file-label">
+                        Upload your data
+                    </span>
+                    </span>
+                </label>
+            </div>
+        </div>
+        <!-- Progress Bar -->
+        <progress *ngIf="filesSelected" class="progress is-info" max="100">30%</progress>
+        <div *ngIf="filesUploadSuccessfull">
+                <div class="notification is-success">
+                    File upload successfull.
+                </div> 
+            </div>
+        </div>
+    </li>
+    <li class="step-item is-danger is-completed">
+        <div class="step-marker">2</div>
+        <div class="step-details">
+        <p class="step-title">Step 2</p>
+        <p>Get the results</p>
+        <div class="column">
+            <div *ngIf="isResultGenerated">
+                <a class="button is-warning" [href]="ocrFileUrl">Download</a>
+            </div>
+            <div *ngIf="filesUploadSuccessfull">
+                <p>Please wait while the results are generated.</p>
+                <!-- Progress Bar -->
+                <progress class="progress is-info" max="100">30%</progress> 
+            </div>
+        </div>
+        </div>
+    </li>
+</ul>
