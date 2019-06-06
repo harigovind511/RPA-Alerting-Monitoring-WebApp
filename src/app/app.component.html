@@ -1,253 +1,50 @@
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css" integrity="sha384-oS3vJWv+0UjzBfQzYUhtDYW+Pj2yciDJxpsK1OYPAYjqT085Qq/1cq5FLXAZQ7Ay" crossorigin="anonymous">
-
-  <style>
-    body {
-        background: linear-gradient(to left top, blue, red) fixed;
-    }
-    @import url(https://fonts.googleapis.com/css?family=Open+Sans+Condensed:300);
-
-    body {padding: 0; margin: 0; background-color: #333;}
-
-    .container {position: fixed; top: 25%; left: 25%;}
-
-    /* make keyframes that tell the start state and the end state of our object */
-    @-webkit-keyframes fadeIn { from { opacity:0; } to { opacity:1; } }
-    @-moz-keyframes fadeIn { from { opacity:0; } to { opacity:1; } }
-    @keyframes fadeIn { from { opacity:0; } to { opacity:1; } }
-
-    .fade-in {
-    opacity:0;  /* make things invisible upon start */
-    -webkit-animation:fadeIn ease-in 1;  /* call our keyframe named fadeIn, use animattion ease-in and repeat it only 1 time */
-    -moz-animation:fadeIn ease-in 1;
-    animation:fadeIn ease-in 1;
-
-    -webkit-animation-fill-mode:forwards;  /* this makes sure that after animation is done we remain at the last keyframe value (opacity: 1)*/
-    -moz-animation-fill-mode:forwards;
-    animation-fill-mode:forwards;
-
-    -webkit-animation-duration:1s;
-    -moz-animation-duration:1s;
-    animation-duration:1s;
-    }
-
-    .fade-in.one {
-    -webkit-animation-delay: 0.7s;
-    -moz-animation-delay: 0.7s;
-    animation-delay: 0.7s;
-    }
-
-    .fade-in.two {
-    -webkit-animation-delay: 1.2s;
-    -moz-animation-delay:1.2s;
-    animation-delay: 1.2s;
-    }
-
-    .fade-in.three {
-    -webkit-animation-delay: 1.6s;
-    -moz-animation-delay: 1.6s;
-    animation-delay: 1.6s;
-    }
-
-    /*---make a basic box ---*/
-    .box{
-    width: 200px;
-    height: 200px;
-    position: relative;
-    margin: 10px;
-    float: left;
-    border: 1px solid #333;
-    background: #999;
-    }
-  </style>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css"
+        integrity="sha384-oS3vJWv+0UjzBfQzYUhtDYW+Pj2yciDJxpsK1OYPAYjqT085Qq/1cq5FLXAZQ7Ay" crossorigin="anonymous">
 </head>
 <main class="main-wrapper">
     <!-- header -->
     <nav class="navbar">
         <div class="navbar-brand">
             <a class="navbar-item" href="#">
-            <img src="https://banner2.kisspng.com/20180424/jbe/kisspng-unilever-logo-company-variety-vector-5adfcaccb776b7.7171107415246158847515.jpg" alt="ACS Experince Zone"> 
+                <img src="https://banner2.kisspng.com/20180424/jbe/kisspng-unilever-logo-company-variety-vector-5adfcaccb776b7.7171107415246158847515.jpg"
+                    alt="VM Process Monitoring & Alerting Tool">
             </a>
-            <h3>RPA Process Alerting & Monitoring Tool</h3>
+            <h3 id="abc" style="font-weight: 500; margin-top: 8px;">VM Process Monitoring & Alerting Tool</h3>
             <div class="navbar-burger burger" data-target="navbarExampleTransparentExample">
-            <span></span>
-            <span></span>
-            <span></span>
+                <span></span>
+                <span></span>
+                <span></span>
             </div>
         </div>
-        
+
         <div id="navbarExampleTransparentExample" class="navbar-menu">
             <div class="navbar-start">
-                
+
             </div>
-        
+
             <!-- <div class="navbar-end">
-                <a class="navbar-item" href="/chatbot">
-                    Chatbot
-                </a>
-                <a class="navbar-item" href="/nlp">
-                    Natural Language Processing
-                </a>
-                <a class="navbar-item" href="/ml">
-                    Machine Learning
-                </a>
-                <a class="navbar-item" href="/ocr">
-                    Optical Character Recogintion
-                </a>
-                <a class="navbar-item" href="/vision">
-                    Computer Vision
-                </a>
-            </div> -->
+                  <a class="navbar-item" href="/chatbot">
+                      Chatbot
+                  </a>
+                  <a class="navbar-item" href="/nlp">
+                      Natural Language Processing
+                  </a>
+              </div> -->
         </div>
     </nav>
 
     <!-- Routed Page Content -->
-    <!-- <router-outlet></router-outlet> -->
-    <article class="message is-success">
-        <div class="message-body">
-            <div ng-app ng-controller="Ctrl">
-                Last Updated on: {{ date | date:'dd-MM-yyyy hh:mm:ss a':'+0530' }}
-            </div>
-        </div>
-    </article>
-    <br /><br />
-    <!-- Pie Charts Section -->
-    <div class="columns">
-        <div class="column is-one-third">
-            <div class="card">
-                <div class="card-content">
-                    <div>
-                        <canvas
-                            baseChart
-                            [chartType]="'doughnut'"
-                            [datasets]="missRunData"
-                            [labels]="labels"
-                            [options]="chartOptions"
-                            [legend]="true"
-                            (chartClick)="onMissRunChartClick($event)">
-                        </canvas>
-                    </div>
-                </div>
-                <footer class="card-footer">
-                    <p class="card-footer-item">
-                    <span>
-                        Miss Runs
-                    </span>
-                    </p>
-                </footer>
-            </div>
-        </div>
-        <div class="column is-one-third">
-            <div class="card">
-                <div class="card-content">
-                    <div>
-                        <canvas
-                            baseChart
-                            [chartType]="'doughnut'"
-                            [datasets]="failedRunData"
-                            [labels]="labels"
-                            [options]="chartOptions"
-                            [legend]="true"
-                            (chartClick)="onFailedRunChartClick($event)">
-                        </canvas>
-                    </div>
-                </div>
-                <footer class="card-footer">
-                    <p class="card-footer-item">
-                    <span>
-                        Failed Process
-                    </span>
-                    </p>
-                </footer>
-            </div>
-        </div>
-        <div class="column is-one-third">
-            <div class="card">
-                <div class="card-content">
-                    <div>
-                        <canvas
-                            baseChart
-                            [chartType]="'doughnut'"
-                            [datasets]="successfullRunData"
-                            [labels]="labels"
-                            [options]="chartOptions"
-                            [legend]="true"
-                            (chartClick)="onSuccessfullRunChartClick($event)">
-                        </canvas>
-                    </div>
-                </div>
-                <footer class="card-footer">
-                    <p class="card-footer-item">
-                    <span>
-                        Successfull Process
-                    </span>
-                    </p>
-                </footer>
-            </div>
-        </div>
-    </div>
+    <router-outlet></router-outlet>
 
-    <br /><br />
-    <!-- Line Chart -->
-    <div class="columns">
-        <div class="column">
-            <div class="card">
-                <div class="card-content">
-                    <div>
-                        <div style="margin: auto; max-width: 1000px; margin-top:50px">
-                            <data-table id="process-grid"
-                                headerTitle="Process Details"
-                                [items]="inBufferProcess"
-                                [itemCount]="processCount"
-                                [limit]="10"
-                                [substituteRows]="false"
-                                [expandableRows]="true"
-                                [indexColumnHeader]="'#'"
-                                [selectOnRowClick]="true"
-                                (reload)="reloadProcess($event)"
-                                >
-                                <ng-template #dataTableExpand let-item="item">
-                                    <div [textContent]="item.description" style="padding: 5px; color: gray"></div>
-                                </ng-template>
-                                <data-table-column
-                                    [property]="'name'"
-                                    [header]="'Name'"
-                                    [sortable]="true">
-                                </data-table-column>
-                                <data-table-column
-                                    [property]="'id'"
-                                    [header]="'ID'"
-                                    [sortable]="true">
-                                </data-table-column>
-                            </data-table>
-                            <!-- <div style="margin-top: 10px">
-                                <b>Selected:</b>
-                                <span *ngIf="filmsTable.selectedRow == null"><i>No item selected</i></span>
-                                <span [textContent]="filmsTable.selectedRow && filmsTable.selectedRow.item.title"></span>
-                            </div> -->
-                        </div>
-                    </div>
-                </div>
-                <footer class="card-footer">
-                    <p class="card-footer-item">
-                    <span>
-                        Top Process Detail
-                    </span>
-                    </p>
-                </footer>
-            </div>
-        </div>
-    </div>
-
-    <br /><br />
     <!-- footer -->
-    <footer class="footer">
+    <footer class="footer" style="background-color: #cdfddf">
         <div class="content has-text-centered">
             <p>
-            <strong>Powered by Automation Factory</strong>
+                <strong>Powered by Automation Factory</strong>
             </p>
         </div>
     </footer>
-</main> 
+</main>

@@ -1,0 +1,211 @@
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css"
+      integrity="sha384-oS3vJWv+0UjzBfQzYUhtDYW+Pj2yciDJxpsK1OYPAYjqT085Qq/1cq5FLXAZQ7Ay" crossorigin="anonymous">
+      <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+
+<style>
+  ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    background-color: #333;
+  }
+  
+  li {
+    float: left;
+  }
+  
+  li a {
+    display: block;
+    color: white;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+  }
+  
+  li a:hover {
+    background-color: #111;
+  }
+</style>
+
+<ul style="margin-bottom: 2%">
+  <li><a class="active" href="#home">VM Process Monitoring & Alerting Tool</a></li>
+</ul>
+
+<main class="main-wrapper">
+  <!-- Last Updated -->
+  <div style="padding: 1%; position:absolute; right: 10px;" ng-app ng-controller="Ctrl">
+      <span class="tag is-warning">Last Updated on: {{ date | date:'dd-MM-yyyy hh:mm:ss a':'+0530' }}</span>
+  </div>
+
+  <!-- Top Environment Level Info Panel -->
+  <h2 class="title is-5" style="padding-left: 2%">Environment Level Stats</h2>
+  <div class="columns" style="padding: 2%; padding-top: 0%">  
+    <div class="column is-one-third">
+      <section class="hero is-small is-primary">
+        <div class="hero-body">
+          <div class="container">
+            <div class="columns">
+              <div class="column is-one-third">
+                <i class="fa fa-4x fa-laptop" aria-hidden="true"></i>
+              </div>
+              <div class="column">
+                <h2 class="title is-5">Development</h2>
+                <h2 class="title is-6"><i class="fa fa-check" aria-hidden="true"></i> : {{ developmentActiveProcessCount }} <i class="fa fa-times" aria-hidden="true"></i> : {{ developmentInActiveProcessCount }}</h2>
+              </div>
+            </div> 
+          </div>
+        </div>
+      </section>
+      <div style="background-color:hsl(0, 0%, 96%); border-color: hsl(171, 100%, 41%); border-width: 1px; border-style: solid">
+          <canvas id="devCanvas">{{ devChart }}</canvas>
+      </div>
+    </div>
+    <div class="column is-one-third">
+      <section class="hero is-small is-info">
+        <div class="hero-body">
+          <div class="container">
+              <div class="columns">
+                <div class="column is-one-third">
+                  <i class="fa fa-4x fa-desktop" aria-hidden="true"></i>
+                </div>
+                <div class="column">
+                  <h2 class="title is-5">Quality</h2>
+                  <h2 class="title is-6"><i class="fa fa-check" aria-hidden="true"></i> : {{ qualityActiveProcessCount }} <i class="fa fa-times" aria-hidden="true"></i> : {{ qualityInActiveProcessCount }}</h2>
+                </div>
+              </div>
+          </div>
+        </div>
+      </section>
+      <div style="background-color:hsl(0, 0%, 96%); border-color: hsl(204, 86%, 53%); border-width: 1px; border-style: solid">
+          <canvas id="qaCanvas">{{ qaChart }}</canvas>
+      </div>
+    </div>
+    <div class="column is-one-third">
+      <section class="hero is-small is-success">
+        <div class="hero-body">
+          <div class="container">
+              <div class="columns">
+                <div class="column is-one-third">
+                  <i class="fa fa-4x fa-server" aria-hidden="true"></i>
+                </div>
+                <div class="column">
+                  <h2 class="title is-5">Production</h2>
+                  <h2 class="title is-6"><i class="fa fa-check" aria-hidden="true"></i> : {{ productionActiveProcessCount }} <i class="fa fa-times" aria-hidden="true"></i> : {{ productionInActiveProcessCount }}</h2>
+                </div>
+              </div>
+          </div>
+        </div>
+      </section>
+      <div style="background-color:hsl(0, 0%, 96%); border-color: hsl(141, 71%, 48%); border-width: 1px; border-style: solid">
+          <canvas id="prodCanvas">{{ prodChart }}</canvas>
+      </div>
+    </div>
+  </div>
+
+  <!-- Page Content with VM Stats -->
+
+  <!-- For Filter -->
+  <div class="field" style="position:absolute; right: 100px; padding-bottom: 2%">
+    <div class="control">
+      <div class="select">
+        <select id="mySelect" (change)="onChange($event.target.value)">
+          <option value="All">All</option>
+          <option value="In-Active">In-Active</option>
+          <option value="Active">Active</option>
+        </select>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Title Header -->
+  <h2 class="title is-5" style="padding-left: 2%">Virtual Machine Process Health</h2>
+
+  <!-- VM Process Contents -->
+  <div style="padding: 2%; padding-top: 0%">
+    <section class="hero is-medium" style="background-color: hsl(0, 0%, 90%)">
+      <div class="hero-body" style="padding-top: 1%;">
+        <div class="container">
+          <label *ngFor="let items of dataVM" class="button" (click)="isVMDetailsModelClickedEvent(items)" style="padding: 1.5%" [ngStyle]="items.IsBluePrismRunning==false?{'background-color':'hsl(348, 100%, 61%)'} : {'background-color': 'hsl(141, 71%, 48%)'}"><h2 class="title is-6" style="color: hsl(0, 0%, 98%)">{{ items.PartitionKey }}</h2></label>
+        </div>
+      </div>
+    </section>
+  </div>
+  
+  <!-- footer -->
+  <footer class="footer">
+      <div class="content has-text-centered">
+          <p>
+              <strong>Powered by Automation Factory</strong>
+          </p>
+      </div>
+  </footer>
+</main>
+
+
+<div [ngClass]="{'is-active': isVMDetailsModelClicked , 'modal' : true}">
+    <div class="modal-background" (click)="isVMDetailsModelClickedEvent(null)"></div>
+    <div class="modal-content">
+        <div class="">
+            <section class="modal-card-body">
+                <div class="field is-horizontal">
+                  <div class="field-label is-normal">
+                    <label class="label">VM Name</label>
+                  </div>
+                  <div class="field-body">
+                    <div class="field">
+                      <p class="control">
+                        <input class="input is-static" value="{{ currentVMName }}" readonly>
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              <div class="field is-horizontal">
+                <div class="field-label is-normal">
+                  <label class="label">Environment</label>
+                </div>
+                <div class="field-body">
+                  <div class="field">
+                    <p class="control">
+                      <input class="input is-static" value="{{ currentEnvironment }}" readonly>
+                    </p>
+                  </div>
+                </div>
+              </div>
+              <div class="field is-horizontal">
+                <div class="field-label is-normal">
+                  <label class="label">Last Update</label>
+                </div>
+                <div class="field-body">
+                  <div class="field">
+                    <p class="control">
+                      <input class="input is-static" value="{{ lastUpdatedDatetime }}" readonly>
+                    </p>
+                  </div>
+                </div>
+              </div>
+              <div class="field is-horizontal">
+                  <div class="field-label">
+                    <label class="label">BluePrism</label>
+                  </div>
+                  <div class="field-body">
+                    <div class="field">
+                      <div class="control">
+                        <div class="tags has-addons">
+                          <span class="tag">{{ isBluePrismRunning == true ? 'Active' : 'InActive' }}</span>
+                          <span [ngClass]="{'is-success': isBluePrismRunning , 'is-danger': !isBluePrismRunning, 'tag' : true}">No</span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+            </section>
+        </div>
+    </div>
+    <button class="modal-close is-large" (click)="isVMDetailsModelClickedEvent(null)" aria-label="close"></button>
+</div>
