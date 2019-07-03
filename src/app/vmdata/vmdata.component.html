@@ -2,8 +2,8 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css"
-      integrity="sha384-oS3vJWv+0UjzBfQzYUhtDYW+Pj2yciDJxpsK1OYPAYjqT085Qq/1cq5FLXAZQ7Ay" crossorigin="anonymous">
-      <meta charset="utf-8">
+    integrity="sha384-oS3vJWv+0UjzBfQzYUhtDYW+Pj2yciDJxpsK1OYPAYjqT085Qq/1cq5FLXAZQ7Ay" crossorigin="anonymous">
+  <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 </head>
 
@@ -15,11 +15,11 @@
     overflow: hidden;
     background-color: #333;
   }
-  
+
   li {
     float: left;
   }
-  
+
   li a {
     display: block;
     color: white;
@@ -27,26 +27,99 @@
     padding: 14px 16px;
     text-decoration: none;
   }
-  
+
   li a:hover {
     background-color: #111;
   }
 </style>
 
-<ul style="margin-bottom: 2%">
+<ul *ngIf="!isUserAuthenticated" style="margin-bottom: 2%">
   <li><a class="active" href="#home">VM Process Monitoring & Alerting Tool</a></li>
+  <li><a style="position: absolute; ;right: 0px" id="userLogin" (click)="authFunction()">{{ authButtonName }}</a></li>
 </ul>
 
-<main class="main-wrapper">
+<main class="main-wrapper" *ngIf="!isUserAuthenticated">
   <!-- Last Updated -->
   <div style="padding: 1%; position:absolute; right: 10px;" ng-app ng-controller="Ctrl">
-      <span class="tag is-warning">Last Updated on: {{ date | date:'dd-MM-yyyy hh:mm:ss a':'+0530' }}</span>
+    <span class="tag is-warning">Last Updated on: {{ date | date:'dd-MM-yyyy hh:mm:ss a':'+0530' }}</span>
   </div>
+
+  <!--Attention required inactive VM's-->
+  <h2 class="title is-5" style="padding-left: 2%">Attention Required <i class="fa fa-exclamation-triangle" style="color: red" aria-hidden="true"></i></h2>
+
+  <!-- VM Process Contents for In-active VM's-->
+  <div style="padding: 2%; padding-top: 0%">
+    <section style="background-color: hsl(0, 0%, 90%)">
+      <div class="hero-body" style="padding-top: 1%;">
+        <div class="container">
+          <label *ngFor="let items of inactivedata" class="button" (click)="isVMDetailsModelClickedEvent(items)"
+            style="padding: 1.5%;background-color: hsl(348, 100%, 61%)">
+            <h2 class="title is-6" style="color: hsl(0, 0%, 98%)">{{ items.PartitionKey }}</h2>
+          </label>
+        </div>
+      </div>
+    </section>
+  </div>
+
 
   <!-- Top Environment Level Info Panel -->
   <h2 class="title is-5" style="padding-left: 2%">Environment Level Stats</h2>
-  <div class="columns" style="padding: 2%; padding-top: 0%">  
-    <div class="column is-one-third">
+
+  <div class="columns" style="padding: 2%; padding-top: 0%">
+    <div class="column is-one-third" style="border-right-style: solid; border-color: hsl(348, 100%, 61%)">
+      <!-- <h2 style="
+                border: 4px solid gray;
+                font-weight: 500;
+                font-size: 1.25rem;
+                padding: inherit;
+                background: bisque;
+                text-align: center;
+                ">Blue Prism</h2> -->
+      <img src="data:image/png;base64,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" alt="Smiley face" height="400px" width="200px">
+      <br>
+      <section class="hero is-small is-success">
+        <div class="hero-body">
+          <div class="container">
+            <div class="columns">
+              <div class="column is-one-third">
+                <i class="fa fa-4x fa-server" aria-hidden="true"></i>
+              </div>
+              <div class="column">
+                <h2 class="title is-5">Production</h2>
+                <h2 class="title is-6"><i class="fa fa-check" aria-hidden="true"></i> :
+                  {{ productionActiveProcessCount }} <i class="fa fa-times" aria-hidden="true"></i> :
+                  {{ productionInActiveProcessCount }}</h2>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+      <div
+        style="background-color:hsl(0, 0%, 96%); border-color: hsl(141, 71%, 48%); border-width: 1px; border-style: solid">
+        <canvas id="prodCanvas">{{ prodChart }}</canvas>
+      </div>
+      <br>
+      <section class="hero is-small is-info">
+        <div class="hero-body">
+          <div class="container">
+            <div class="columns">
+              <div class="column is-one-third">
+                <i class="fa fa-4x fa-desktop" aria-hidden="true"></i>
+              </div>
+              <div class="column">
+                <h2 class="title is-5">Quality</h2>
+                <h2 class="title is-6"><i class="fa fa-check" aria-hidden="true"></i> : {{ qualityActiveProcessCount }}
+                  <i class="fa fa-times" aria-hidden="true"></i> : {{ qualityInActiveProcessCount }}</h2>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+      <div
+        style="background-color:hsl(0, 0%, 96%); border-color: hsl(204, 86%, 53%); border-width: 1px; border-style: solid">
+        <canvas id="qaCanvas">{{ qaChart }}</canvas>
+      </div>
+      <br>
       <section class="hero is-small is-primary">
         <div class="hero-body">
           <div class="container">
@@ -56,17 +129,179 @@
               </div>
               <div class="column">
                 <h2 class="title is-5">Development</h2>
-                <h2 class="title is-6"><i class="fa fa-check" aria-hidden="true"></i> : {{ developmentActiveProcessCount }} <i class="fa fa-times" aria-hidden="true"></i> : {{ developmentInActiveProcessCount }}</h2>
+                <h2 class="title is-6"><i class="fa fa-check" aria-hidden="true"></i> :
+                  {{ developmentActiveProcessCount }} <i class="fa fa-times" aria-hidden="true"></i> :
+                  {{ developmentInActiveProcessCount }}</h2>
               </div>
-            </div> 
+            </div>
           </div>
         </div>
       </section>
-      <div style="background-color:hsl(0, 0%, 96%); border-color: hsl(171, 100%, 41%); border-width: 1px; border-style: solid">
-          <canvas id="devCanvas">{{ devChart }}</canvas>
+      <div
+        style="background-color:hsl(0, 0%, 96%); border-color: hsl(171, 100%, 41%); border-width: 1px; border-style: solid">
+        <canvas id="devCanvas">{{ devChart }}</canvas>
       </div>
     </div>
+
+    <!-- UI Path -->
+    <div class="column is-one-third" style="border-right-style: solid; border-color: hsl(348, 100%, 61%)">
+      <!-- <h2 style="
+                border: 4px solid gray;
+                font-weight: 500;
+                font-size: 1.25rem;
+                padding: inherit;
+                background: bisque;
+                text-align: center;
+                ">UI Path</h2> -->
+      <img src="https://cdn2.hubspot.net/hubfs/416323/UiPath%20Logo%20blue.png" alt="Smiley face" height="400px" width="200px">
+      <br>
+      <section class="hero is-small is-success">
+        <div class="hero-body">
+          <div class="container">
+            <div class="columns">
+              <div class="column is-one-third">
+                <i class="fa fa-4x fa-server" aria-hidden="true"></i>
+              </div>
+              <div class="column">
+                <h2 class="title is-5">Production</h2>
+                <h2 class="title is-6"><i class="fa fa-check" aria-hidden="true"></i> :
+                  {{ productionUIActiveProcessCount }} <i class="fa fa-times" aria-hidden="true"></i> :
+                  {{ productionUIInActiveProcessCount }}</h2>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+      <div
+        style="background-color:hsl(0, 0%, 96%); border-color: hsl(141, 71%, 48%); border-width: 1px; border-style: solid">
+        <canvas id="uiProdCanvas">{{ UIprodChart }}</canvas>
+      </div>
+      <br>
+      <section class="hero is-small is-info">
+        <div class="hero-body">
+          <div class="container">
+            <div class="columns">
+              <div class="column is-one-third">
+                <i class="fa fa-4x fa-desktop" aria-hidden="true"></i>
+              </div>
+              <div class="column">
+                <h2 class="title is-5">Quality</h2>
+                <h2 class="title is-6"><i class="fa fa-check" aria-hidden="true"></i> : {{ qualityUIActiveProcessCount }}
+                  <i class="fa fa-times" aria-hidden="true"></i> : {{ qualityUIInActiveProcessCount }}</h2>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+      <div
+        style="background-color:hsl(0, 0%, 96%); border-color: hsl(204, 86%, 53%); border-width: 1px; border-style: solid">
+        <canvas id="qaUICanvas">{{ UIqaChart }}</canvas>
+      </div>
+      <br>
+
+      <section class="hero is-small is-primary">
+        <div class="hero-body">
+          <div class="container">
+            <div class="columns">
+              <div class="column is-one-third">
+                <i class="fa fa-4x fa-laptop" aria-hidden="true"></i>
+              </div>
+              <div class="column">
+                <h2 class="title is-5">Development</h2>
+                <h2 class="title is-6"><i class="fa fa-check" aria-hidden="true"></i> :
+                  {{ developmentUIActiveProcessCount }} <i class="fa fa-times" aria-hidden="true"></i> :
+                  {{ developmentUIInActiveProcessCount }}</h2>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+      <div
+        style="background-color:hsl(0, 0%, 96%); border-color: hsl(171, 100%, 41%); border-width: 1px; border-style: solid">
+        <canvas id="devUICanvas">{{ UIdevChart }}</canvas>
+      </div>
+    </div>
+
+    <!-- Automation Anywhere -->
     <div class="column is-one-third">
+      <!-- <h2 style="
+                border: 4px solid gray;
+                font-weight: 500;
+                font-size: 1.25rem;
+                padding: inherit;
+                background: bisque;
+                text-align: center;
+                ">Automation Anywhere</h2> -->
+      <img src="https://storage.googleapis.com/ehimages/2018/5/13/img_ffcf4f4b058e489dd9fa0b34f99aa1e9_1526226451134_original.png" alt="Smiley face" height="400px" width="200px">
+      <br>
+      <section class="hero is-small is-success">
+        <div class="hero-body">
+          <div class="container">
+            <div class="columns">
+              <div class="column is-one-third">
+                <i class="fa fa-4x fa-server" aria-hidden="true"></i>
+              </div>
+              <div class="column">
+                <h2 class="title is-5">Production</h2>
+                <h2 class="title is-6"><i class="fa fa-check" aria-hidden="true"></i> :
+                  {{ productionAutomationActiveProcessCount }} <i class="fa fa-times" aria-hidden="true"></i> :
+                  {{ productionAutomationInActiveProcessCount }}</h2>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+      <div
+        style="background-color:hsl(0, 0%, 96%); border-color: hsl(141, 71%, 48%); border-width: 1px; border-style: solid">
+        <canvas id="prodAutoCanvas">{{ AutoprodChart }}</canvas>
+      </div>
+      <br>
+      <section class="hero is-small is-info">
+        <div class="hero-body">
+          <div class="container">
+            <div class="columns">
+              <div class="column is-one-third">
+                <i class="fa fa-4x fa-desktop" aria-hidden="true"></i>
+              </div>
+              <div class="column">
+                <h2 class="title is-5">Quality</h2>
+                <h2 class="title is-6"><i class="fa fa-check" aria-hidden="true"></i> : {{ qualityAutomationActiveProcessCount }}
+                  <i class="fa fa-times" aria-hidden="true"></i> : {{ qualityAutomationInActiveProcessCount }}</h2>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+      <div
+        style="background-color:hsl(0, 0%, 96%); border-color: hsl(204, 86%, 53%); border-width: 1px; border-style: solid">
+        <canvas id="qaAutoCanvas">{{ AutoqaChart }}</canvas>
+      </div>
+      <br>
+      <section class="hero is-small is-primary">
+        <div class="hero-body">
+          <div class="container">
+            <div class="columns">
+              <div class="column is-one-third">
+                <i class="fa fa-4x fa-laptop" aria-hidden="true"></i>
+              </div>
+              <div class="column">
+                <h2 class="title is-5">Development</h2>
+                <h2 class="title is-6"><i class="fa fa-check" aria-hidden="true"></i> :
+                  {{ developmentAutomationActiveProcessCount }} <i class="fa fa-times" aria-hidden="true"></i> :
+                  {{ developmentAutomationInActiveProcessCount }}</h2>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+      <div
+        style="background-color:hsl(0, 0%, 96%); border-color: hsl(171, 100%, 41%); border-width: 1px; border-style: solid">
+        <canvas id="devAutoCanvas">{{ devChart }}</canvas>
+      </div>
+    </div>
+    <!--**********************************************************************-->
+
+    <!-- <div class="column is-one-third">
       <section class="hero is-small is-info">
         <div class="hero-body">
           <div class="container">
@@ -85,8 +320,11 @@
       <div style="background-color:hsl(0, 0%, 96%); border-color: hsl(204, 86%, 53%); border-width: 1px; border-style: solid">
           <canvas id="qaCanvas">{{ qaChart }}</canvas>
       </div>
-    </div>
-    <div class="column is-one-third">
+    </div>-->
+
+    <!--**********************************************************************-->
+
+    <!--<div class="column is-one-third">
       <section class="hero is-small is-success">
         <div class="hero-body">
           <div class="container">
@@ -105,107 +343,178 @@
       <div style="background-color:hsl(0, 0%, 96%); border-color: hsl(141, 71%, 48%); border-width: 1px; border-style: solid">
           <canvas id="prodCanvas">{{ prodChart }}</canvas>
       </div>
-    </div>
+    </div>-->
   </div>
 
-  <!-- Page Content with VM Stats -->
 
-  <!-- For Filter -->
-  <div class="field" style="position:absolute; right: 100px; padding-bottom: 2%">
-    <div class="control">
-      <div class="select">
-        <select id="mySelect" (change)="onChange($event.target.value)">
-          <option value="All">All</option>
-          <option value="In-Active">In-Active</option>
-          <option value="Active">Active</option>
-        </select>
+  <!-- Page Content with VM Stats -->
+  <div>
+    <!-- Title Header -->  
+    <h2 class="title is-5" style="padding-left: 2%">Virtual Machine Process Health</h2>
+    
+    <!-- Drop Downs Filter -->
+    <div class="field" style="padding-bottom: 2%;padding-left: 2%">
+      <div class="control">
+        <!-- For Filter based on Team-->
+        <div class="select">
+            <select>  
+              <option  *ngFor="let items of distinctteams">{{items}}</option>  
+            </select>  
+        </div>
+        
+        <!-- For Filter based on status-->
+        <div class="select">
+          <select id="mySelect" (change)="onChange($event.target.value)">
+            <option value="All">All</option>
+            <option value="In-Active">In-Active</option>
+            <option value="Active">Active</option>
+          </select>
+        </div>
+
+        <!-- For Filter based on Site-->
+        <div class="select">
+          <select id="SiteSelect" (change)="onChangeSite($event.target.value)">
+            <option value="All">All</option>
+            <option value="Development">Development</option>
+            <option value="Quality">Quality</option>
+            <option value="Production">Production</option>
+          </select>
+        </div>
+
+        <div class="columns">
+          <div class="column is-one-fifth">
+            <!-- Multi Select Tags -->
+            <ng-multiselect-dropdown
+              [data]="dropdownList"
+              [(ngModel)]="selectedItems"
+              [settings]="dropdownSettings"
+              (onSelect)="onItemSelect($event)"
+              (onDeSelect)="onItemDeSelect($event)"
+              (onSelectAll)="onSelectAll($event)"
+            >
+            </ng-multiselect-dropdown>
+          </div>
+        </div>
+        
       </div>
     </div>
   </div>
-  
-  <!-- Title Header -->
-  <h2 class="title is-5" style="padding-left: 2%">Virtual Machine Process Health</h2>
 
   <!-- VM Process Contents -->
   <div style="padding: 2%; padding-top: 0%">
     <section class="hero is-medium" style="background-color: hsl(0, 0%, 90%)">
       <div class="hero-body" style="padding-top: 1%;">
         <div class="container">
-          <label *ngFor="let items of dataVM" class="button" (click)="isVMDetailsModelClickedEvent(items)" style="padding: 1.5%" [ngStyle]="items.IsBluePrismRunning==false?{'background-color':'hsl(348, 100%, 61%)'} : {'background-color': 'hsl(141, 71%, 48%)'}"><h2 class="title is-6" style="color: hsl(0, 0%, 98%)">{{ items.PartitionKey }}</h2></label>
+          <label *ngFor="let items of dataVM" class="button" (click)="isVMDetailsModelClickedEvent(items)"
+            style="padding: 1.5%"
+            [ngStyle]="items.IsBluePrismRunning==false ? {'background-color':'hsl(348, 100%, 61%)'} : {'background-color': 'hsl(141, 71%, 48%)'}">
+            <h2 class="title is-6" style="color: hsl(0, 0%, 98%)">{{ items.PartitionKey }}</h2>
+          </label>
         </div>
       </div>
     </section>
   </div>
-  
+
   <!-- footer -->
   <footer class="footer">
-      <div class="content has-text-centered">
-          <p>
-              <strong>Powered by Automation Factory</strong>
-          </p>
-      </div>
+    <div class="content has-text-centered">
+      <p>
+        <strong>Powered by Automation Factory</strong>
+      </p>
+    </div>
   </footer>
 </main>
 
-
-<div [ngClass]="{'is-active': isVMDetailsModelClicked , 'modal' : true}">
-    <div class="modal-background" (click)="isVMDetailsModelClickedEvent(null)"></div>
-    <div class="modal-content">
-        <div class="">
-            <section class="modal-card-body">
-                <div class="field is-horizontal">
-                  <div class="field-label is-normal">
-                    <label class="label">VM Name</label>
-                  </div>
-                  <div class="field-body">
-                    <div class="field">
-                      <p class="control">
-                        <input class="input is-static" value="{{ currentVMName }}" readonly>
-                      </p>
-                    </div>
-                  </div>
-                </div>
-              <div class="field is-horizontal">
-                <div class="field-label is-normal">
-                  <label class="label">Environment</label>
-                </div>
-                <div class="field-body">
-                  <div class="field">
-                    <p class="control">
-                      <input class="input is-static" value="{{ currentEnvironment }}" readonly>
-                    </p>
-                  </div>
-                </div>
-              </div>
-              <div class="field is-horizontal">
-                <div class="field-label is-normal">
-                  <label class="label">Last Update</label>
-                </div>
-                <div class="field-body">
-                  <div class="field">
-                    <p class="control">
-                      <input class="input is-static" value="{{ lastUpdatedDatetime }}" readonly>
-                    </p>
-                  </div>
-                </div>
-              </div>
-              <div class="field is-horizontal">
-                  <div class="field-label">
-                    <label class="label">BluePrism</label>
-                  </div>
-                  <div class="field-body">
-                    <div class="field">
-                      <div class="control">
-                        <div class="tags has-addons">
-                          <span class="tag">{{ isBluePrismRunning == true ? 'Active' : 'InActive' }}</span>
-                          <span [ngClass]="{'is-success': isBluePrismRunning , 'is-danger': !isBluePrismRunning, 'tag' : true}">No</span>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-            </section>
+<div *ngIf="!isUserAuthenticated" [ngClass]="{'is-active': isVMDetailsModelClicked , 'modal' : true}">
+  <div class="modal-background" (click)="isVMDetailsModelClickedEvent(null)"></div>
+  <div class="modal-content">
+    <div class="">
+      <section class="modal-card-body">
+        <div class="field is-horizontal">
+          <div class="field-label is-normal">
+            <label class="label">VM Name</label>
+          </div>
+          <div class="field-body">
+            <div class="field">
+              <p class="control">
+                <input class="input is-static" value="{{ currentVMName }}" readonly>
+              </p>
+            </div>
+          </div>
         </div>
+        <div class="field is-horizontal">
+          <div class="field-label is-normal">
+            <label class="label">Environment</label>
+          </div>
+          <div class="field-body">
+            <div class="field">
+              <p class="control">
+                <input class="input is-static" value="{{ currentEnvironment }}" readonly>
+              </p>
+            </div>
+          </div>
+        </div>
+        <div class="field is-horizontal">
+          <div class="field-label is-normal">
+            <label class="label">Last Update</label>
+          </div>
+          <div class="field-body">
+            <div class="field">
+              <p class="control">
+                <input class="input is-static" value="{{ lastUpdatedDatetime }}" readonly>
+              </p>
+            </div>
+          </div>
+        </div>
+        <div class="field is-horizontal">
+          <div class="field-label">
+            <label class="label">Processes</label>
+          </div>
+          <div class="field-body">
+            <div class="field">
+              <div class="control" *ngFor="let proc of currentVMProcesses">
+                <div class="tags has-addons" style="padding: 1%">
+                  <span class="tag">{{ proc.Name }}</span>
+                  <span
+                    [ngClass]="{'is-success': proc.IsRunning , 'is-danger': !proc.IsRunning, 'tag' : true}"></span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="field is-horizontal">
+          <div class="field-label">
+            <label class="label">Tags</label>
+          </div>
+          <div class="field-body">
+            <div class="field">
+              <div class="control" *ngFor="let tag of tags">
+                <div class="tags has-addons" style="padding: 1%">
+                  <span class="tag">{{ tag }}</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
     </div>
-    <button class="modal-close is-large" (click)="isVMDetailsModelClickedEvent(null)" aria-label="close"></button>
+  </div>
+  <button class="modal-close is-large" (click)="isVMDetailsModelClickedEvent(null)" aria-label="close"></button>
+</div>
+
+<!-- Unauthorized Form -->
+<div class="columns" *ngIf="isUserAuthenticated">
+    <div class="column">
+        <section class="hero is-large is-primary is-bold">
+            <div class="hero-body">
+                <div class="">
+                    <h1 class="subtitle">
+                        Sign In with your Microsoft Account
+                    </h1>
+                    <!-- Sign In/ Sign Out Button -->
+                    <button class="button is-link pull-right" type="button" id="userLogin" (click)="authFunction()">{{ authButtonName }}</button>
+                </div>
+            </div>
+        </section>
+    </div>
 </div>
