@@ -31,10 +31,10 @@
         }
     </style>
     
-    <ul *ngIf="!isUserAuthenticated" style="margin-bottom: 2%">
+    <ul style="margin-bottom: 2%">
         <li><a class="active" href="/vm">VM Process Monitoring</a></li>
         <li><a class="active" href="/processscheduler">Process Scheduler</a></li>
-        <li><a style="position: absolute; ;right: 0px" id="userLogin" (click)="authFunction()">{{ authButtonName }}</a></li>
+        <!-- <li><a style="position: absolute; ;right: 0px" id="userLogin" (click)="authFunction()">{{ authButtonName }}</a></li> -->
     </ul>
 
     <!-- The view is injected here -->

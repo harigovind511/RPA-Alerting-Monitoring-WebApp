@@ -23,7 +23,7 @@ import { DataTableModule } from 'angular5-data-table';
 // For VM Data
 import { VMDataComponent } from './vmdata/vmdata.component';
 // For Miss Run
-import { MissRunComponent } from './missrun/missrun.component';
+import { MissRunComponent } from './MissRun/missrun.component';
 // For Process Scheduler
 import { ProcessSchedulerComponent } from './ProcessScheduler/processscheduler.component';
 // For Authorization
