@@ -5,37 +5,47 @@
         integrity="sha384-oS3vJWv+0UjzBfQzYUhtDYW+Pj2yciDJxpsK1OYPAYjqT085Qq/1cq5FLXAZQ7Ay" crossorigin="anonymous">
 </head>
 <main class="main-wrapper">
-    <!-- header -->
-    <nav class="navbar">
-        <div class="navbar-brand">
-            <a class="navbar-item" href="#">
-                <img src="https://banner2.kisspng.com/20180424/jbe/kisspng-unilever-logo-company-variety-vector-5adfcaccb776b7.7171107415246158847515.jpg"
-                    alt="VM Process Monitoring & Alerting Tool">
-            </a>
-            <h3 id="abc" style="font-weight: 500; margin-top: 8px;">VM Process Monitoring & Alerting Tool</h3>
-            <div class="navbar-burger burger" data-target="navbarExampleTransparentExample">
-                <span></span>
-                <span></span>
-                <span></span>
-            </div>
-        </div>
-
-        <div id="navbarExampleTransparentExample" class="navbar-menu">
-            <div class="navbar-start">
-
-            </div>
-        </div>
-    </nav>
+    <style>
+        ul {
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            background-color: #333;
+        }
+        
+        li {
+            float: left;
+        }
+        
+        li a {
+            display: block;
+            color: white;
+            text-align: center;
+            padding: 14px 16px;
+            text-decoration: none;
+        }
+        
+        li a:hover {
+            background-color: #111;
+        }
+    </style>
+    
+    <ul *ngIf="!isUserAuthenticated" style="margin-bottom: 2%">
+        <li><a class="active" href="/vm">VM Process Monitoring</a></li>
+        <li><a class="active" href="/processscheduler">Process Scheduler</a></li>
+        <li><a style="position: absolute; ;right: 0px" id="userLogin" (click)="authFunction()">{{ authButtonName }}</a></li>
+    </ul>
 
     <!-- The view is injected here -->
     <router-outlet></router-outlet>
 
     <!-- footer -->
-    <footer class="footer" style="background-color: #cdfddf">
+    <footer class="footer">
         <div class="content has-text-centered">
-            <p>
-                <strong>Powered by Automation Factory</strong>
-            </p>
+        <p>
+            <strong>Powered by Automation Factory</strong>
+        </p>
         </div>
     </footer>
 </main>

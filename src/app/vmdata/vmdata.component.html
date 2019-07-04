@@ -7,37 +7,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 </head>
 
-<style>
-  ul {
-    list-style-type: none;
-    margin: 0;
-    padding: 0;
-    overflow: hidden;
-    background-color: #333;
-  }
-
-  li {
-    float: left;
-  }
-
-  li a {
-    display: block;
-    color: white;
-    text-align: center;
-    padding: 14px 16px;
-    text-decoration: none;
-  }
-
-  li a:hover {
-    background-color: #111;
-  }
-</style>
-
-<ul *ngIf="!isUserAuthenticated" style="margin-bottom: 2%">
-  <li><a class="active" href="#home">VM Process Monitoring & Alerting Tool</a></li>
-  <li><a style="position: absolute; ;right: 0px" id="userLogin" (click)="authFunction()">{{ authButtonName }}</a></li>
-</ul>
-
 <main class="main-wrapper" *ngIf="!isUserAuthenticated">
   <!-- Last Updated -->
   <div style="padding: 1%; position:absolute; right: 10px;" ng-app ng-controller="Ctrl">
@@ -414,15 +383,6 @@
       </div>
     </section>
   </div>
-
-  <!-- footer -->
-  <footer class="footer">
-    <div class="content has-text-centered">
-      <p>
-        <strong>Powered by Automation Factory</strong>
-      </p>
-    </div>
-  </footer>
 </main>
 
 <div *ngIf="!isUserAuthenticated" [ngClass]="{'is-active': isVMDetailsModelClicked , 'modal' : true}">

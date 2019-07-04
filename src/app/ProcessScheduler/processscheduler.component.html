@@ -1,0 +1,17 @@
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css"
+        integrity="sha384-oS3vJWv+0UjzBfQzYUhtDYW+Pj2yciDJxpsK1OYPAYjqT085Qq/1cq5FLXAZQ7Ay" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="/node_modules/primeicons/primeicons.css" />
+    <link rel="stylesheet" type="text/css" href="/node_modules/primeng/resources/themes/nova-light/theme.css" />
+    <link rel="stylesheet" type="text/css" href="/node_modules/primeng/resources/primeng.min.css" />
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+
+<div class="control-section">
+    <ejs-schedule width='100%' height='650px' [selectedDate]="selectedDate" [eventSettings]="eventSettings" [currentView]="currentView"
+        (eventRendered)="oneventRendered($event)"  [readonly]="readonly">
+    </ejs-schedule>
+</div>

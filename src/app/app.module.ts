@@ -24,6 +24,8 @@ import { DataTableModule } from 'angular5-data-table';
 import { VMDataComponent } from './vmdata/vmdata.component';
 // For Miss Run
 import { MissRunComponent } from './missrun/missrun.component';
+// For Process Scheduler
+import { ProcessSchedulerComponent } from './ProcessScheduler/processscheduler.component';
 // For Authorization
 import { AuthService } from './Services/authenticationHelper';
 import { UIElementData } from './SharedDataService/SharedDataService';
@@ -36,6 +38,24 @@ import { CalendarModule } from 'primeng/calendar';
 
 import { DatePipe } from '@angular/common'
 
+import { TreeViewModule } from '@syncfusion/ej2-angular-navigations';
+
+import { DropDownListAllModule, MultiSelectAllModule } from '@syncfusion/ej2-angular-dropdowns';
+
+import { MaskedTextBoxModule, UploaderAllModule } from '@syncfusion/ej2-angular-inputs';
+
+import { ToolbarAllModule, ContextMenuAllModule } from '@syncfusion/ej2-angular-navigations';
+
+import { ButtonAllModule  } from '@syncfusion/ej2-angular-buttons';
+
+import { CheckBoxAllModule } from '@syncfusion/ej2-angular-buttons';
+
+import { DatePickerAllModule, TimePickerAllModule, DateTimePickerAllModule } from '@syncfusion/ej2-angular-calendars';
+
+import { NumericTextBoxAllModule } from '@syncfusion/ej2-angular-inputs';
+
+import { ScheduleAllModule, RecurrenceEditorAllModule } from '@syncfusion/ej2-angular-schedule';
+
 export function azureBlobStorageFactory(): IBlobStorage {
     return window['AzureStorage'].Blob;
 }
@@ -44,6 +64,7 @@ export function azureBlobStorageFactory(): IBlobStorage {
         AppComponent,
         LandingPageComponent,
         MissRunComponent,
+        ProcessSchedulerComponent,
         VMDataComponent
     ],
     imports: [
@@ -60,6 +81,21 @@ export function azureBlobStorageFactory(): IBlobStorage {
         DataTablesModule,
         DataTableModule,
         NgMultiSelectDropDownModule,
+        ScheduleAllModule, 
+        RecurrenceEditorAllModule,   
+        NumericTextBoxAllModule, 
+        DatePickerAllModule, 
+        TimePickerAllModule, 
+        DateTimePickerAllModule, 
+        CheckBoxAllModule, 
+        ToolbarAllModule,   
+        DropDownListAllModule, 
+        ContextMenuAllModule, 
+        MaskedTextBoxModule, 
+        UploaderAllModule, 
+        MultiSelectAllModule, 
+        TreeViewModule, 
+        ButtonAllModule,
         RouterModule.forRoot([
             {
                 path: '',
@@ -77,6 +113,10 @@ export function azureBlobStorageFactory(): IBlobStorage {
             {
                 path: 'missrun',
                 component: MissRunComponent
+            },
+            {
+                path: 'processscheduler',
+                component: ProcessSchedulerComponent
             }
         ])
     ],
