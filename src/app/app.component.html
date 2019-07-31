@@ -4,7 +4,7 @@
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css"
         integrity="sha384-oS3vJWv+0UjzBfQzYUhtDYW+Pj2yciDJxpsK1OYPAYjqT085Qq/1cq5FLXAZQ7Ay" crossorigin="anonymous">
 </head>
-<main class="main-wrapper">
+<main class="main-wrapper" *ngIf="isUserAuthenticated">
     <style>
         ul {
             list-style-type: none;
@@ -34,7 +34,7 @@
     <ul style="margin-bottom: 2%">
         <li><a class="active" href="/vm">VM Process Monitoring</a></li>
         <li><a class="active" href="/processscheduler">Process Scheduler</a></li>
-        <!-- <li><a style="position: absolute; ;right: 0px" id="userLogin" (click)="authFunction()">{{ authButtonName }}</a></li> -->
+        <li><a style="position: absolute; ;right: 0px" id="userLogin" (click)="authFunction()">{{ authButtonName }}</a></li>
     </ul>
 
     <!-- The view is injected here -->
@@ -49,3 +49,20 @@
         </div>
     </footer>
 </main>
+
+<!-- Unauthorized Form -->
+<div class="columns" *ngIf="!isUserAuthenticated">
+    <div class="column">
+        <section class="hero is-large is-primary is-bold">
+            <div class="hero-body">
+                <div class="">
+                    <h1 class="subtitle">
+                        Sign In with your Microsoft Account
+                    </h1>
+                    <!-- Sign In/ Sign Out Button -->
+                    <button class="button is-link pull-right" type="button" id="userLogin" (click)="authFunction()">{{ authButtonName }}</button>
+                </div>
+            </div>
+        </section>
+    </div>
+</div>

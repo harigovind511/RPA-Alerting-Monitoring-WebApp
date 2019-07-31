@@ -7,7 +7,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 </head>
 
-<main class="main-wrapper" *ngIf="!isUserAuthenticated">
+<main class="main-wrapper">
   <!-- Last Updated -->
   <div style="padding: 1%; position:absolute; right: 10px;" ng-app ng-controller="Ctrl">
     <span class="tag is-warning">Last Updated on: {{ date | date:'dd-MM-yyyy hh:mm:ss a':'+0530' }}</span>
@@ -460,21 +460,4 @@
     </div>
   </div>
   <button class="modal-close is-large" (click)="isVMDetailsModelClickedEvent(null)" aria-label="close"></button>
-</div>
-
-<!-- Unauthorized Form -->
-<div class="columns" *ngIf="isUserAuthenticated">
-    <div class="column">
-        <section class="hero is-large is-primary is-bold">
-            <div class="hero-body">
-                <div class="">
-                    <h1 class="subtitle">
-                        Sign In with your Microsoft Account
-                    </h1>
-                    <!-- Sign In/ Sign Out Button -->
-                    <button class="button is-link pull-right" type="button" id="userLogin" (click)="authFunction()">{{ authButtonName }}</button>
-                </div>
-            </div>
-        </section>
-    </div>
 </div>

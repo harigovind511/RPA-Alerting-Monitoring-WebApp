@@ -56,6 +56,8 @@ import { NumericTextBoxAllModule } from '@syncfusion/ej2-angular-inputs';
 
 import { ScheduleAllModule, RecurrenceEditorAllModule } from '@syncfusion/ej2-angular-schedule';
 
+import { StorageServiceModule} from 'angular-webstorage-service';
+
 export function azureBlobStorageFactory(): IBlobStorage {
     return window['AzureStorage'].Blob;
 }
@@ -96,10 +98,11 @@ export function azureBlobStorageFactory(): IBlobStorage {
         MultiSelectAllModule, 
         TreeViewModule, 
         ButtonAllModule,
+        StorageServiceModule,
         RouterModule.forRoot([
             {
                 path: '',
-                redirectTo: 'home',
+                redirectTo: 'vm',
                 pathMatch: 'full'
             },
             {

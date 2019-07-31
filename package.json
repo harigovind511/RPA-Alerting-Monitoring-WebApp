@@ -40,6 +40,7 @@
     "angular-bootstrap-md": "^7.5.1",
     "angular-datatables": "^7.0.0",
     "angular-font-awesome": "^3.1.2",
+    "angular-webstorage-service": "^1.0.2",
     "angular2-bulma": "0.0.2",
     "angular4-table": "0.0.0",
     "angular5-data-table": "^1.0.3",

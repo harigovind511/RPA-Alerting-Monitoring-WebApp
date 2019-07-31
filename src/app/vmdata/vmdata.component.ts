@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Inject } from '@angular/core';
 
 // For HTTP Requests
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
@@ -12,6 +12,9 @@ import { Chart } from 'chart.js';
 import { AuthService } from '../Services/authenticationHelper';
 
 import { UIElementData } from '../SharedDataService/SharedDataService';
+
+import {SESSION_STORAGE, WebStorageService} from 'angular-webstorage-service';
+
 // This lets me use jquery
 //declare var $: any;
 
@@ -113,7 +116,7 @@ export class VMDataComponent implements OnInit {
   lastUpdatedDatetime;
   Tags;
 
-  constructor(private authService: AuthService, private UIElementData: UIElementData, private httpClient: HttpClient) {
+  constructor(@Inject(SESSION_STORAGE) private storage: WebStorageService, private authService: AuthService, private UIElementData: UIElementData, private httpClient: HttpClient) {
     setInterval(() => {
       this.get_data();
     }, 5000);
@@ -128,19 +131,32 @@ export class VMDataComponent implements OnInit {
       "enableCheckAll": false
     };            
 
-    // Initiating Object Reference for SSO Authentication
-    this.authService.initAuth();
+    if(this.storage.get("IsUserAuthenticated") == null || this.storage.get("IsUserAuthenticated") == false){
+      this.UIElementData.currentisUserAuthenticated
+      // Initiating Object Reference for SSO Authentication
+      this.authService.initAuth();
+  
+      // Setting Login button Name
+      this.UIElementData.currentAuthButtonname
+        .subscribe(name => {
+          this.authButtonName = name;
+        });
+  
+      this.UIElementData.currentisUserAuthenticated
+        .subscribe(status => {
+          this.isUserAuthenticated = status;
+          this.storage.set("IsUserAuthenticated", status);
+        });
+    }
+    else{
+      this.isUserAuthenticated = this.storage.get("IsUserAuthenticated");
 
-    // Setting Login button Name
-    this.UIElementData.currentAuthButtonname
-      .subscribe(name => {
+      // Setting Login button Name
+      this.UIElementData.currentAuthButtonname
+        .subscribe(name => {
         this.authButtonName = name;
       });
-
-    this.UIElementData.currentisUserAuthenticated
-      .subscribe(status => {
-        this.isUserAuthenticated = status;
-      });
+    }
   }
 
   onItemSelect(item: any) {

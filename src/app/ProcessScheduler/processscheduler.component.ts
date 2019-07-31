@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Inject } from '@angular/core';
 import { DatePipe } from '@angular/common';
 import {FullCalendarModule} from 'primeng/fullcalendar';
 import { EventSettingsModel, View, EventRenderedArgs, DayService, WeekService, WorkWeekService, MonthService, AgendaService, ResizeService, DragAndDropService }
@@ -6,6 +6,12 @@ from '@syncfusion/ej2-angular-schedule';
 import { zooEventsData } from './Data';
 import { extend } from '@syncfusion/ej2-base';
 import { DataManager, WebApiAdaptor } from '@syncfusion/ej2-data';
+
+import { AuthService } from '../Services/authenticationHelper';
+
+import { UIElementData } from '../SharedDataService/SharedDataService';
+
+import {SESSION_STORAGE, WebStorageService} from 'angular-webstorage-service';
 
 @Component({
     selector: 'app-processscheduler',
@@ -16,6 +22,8 @@ import { DataManager, WebApiAdaptor } from '@syncfusion/ej2-data';
   
   export class ProcessSchedulerComponent implements OnInit {
     mockEvents: any[];
+    authButtonName = 'DEFAULT';
+    isUserAuthenticated = false;
   
     private dataManger: DataManager = new DataManager({
         url: 'https://js.syncfusion.com/demos/ejservices/api/Schedule/LoadData',
@@ -44,8 +52,33 @@ import { DataManager, WebApiAdaptor } from '@syncfusion/ej2-data';
         
     }
   
-    constructor(public datepipe: DatePipe){
-      
+    constructor(@Inject(SESSION_STORAGE) private storage: WebStorageService, public datepipe: DatePipe, private authService: AuthService, private UIElementData: UIElementData, ){
+        if(this.storage.get("IsUserAuthenticated") == null || this.storage.get("IsUserAuthenticated") == false){
+            this.UIElementData.currentisUserAuthenticated
+            // Initiating Object Reference for SSO Authentication
+            this.authService.initAuth();
+        
+            // Setting Login button Name
+            this.UIElementData.currentAuthButtonname
+                .subscribe(name => {
+                this.authButtonName = name;
+                });
+        
+            this.UIElementData.currentisUserAuthenticated
+                .subscribe(status => {
+                this.isUserAuthenticated = status;
+                this.storage.set("IsUserAuthenticated", status);
+                });
+        }
+        else{
+            this.isUserAuthenticated = this.storage.get("IsUserAuthenticated");
+
+            // Setting Login button Name
+            this.UIElementData.currentAuthButtonname
+                .subscribe(name => {
+                this.authButtonName = name;
+            });
+        }
     }
 
     oneventRendered(args: EventRenderedArgs): void {
@@ -59,4 +92,17 @@ import { DataManager, WebApiAdaptor } from '@syncfusion/ej2-data';
             args.element.style.backgroundColor = categoryColor;
         }
     }
+
+    authFunction(){
+        var authActionName ;
+        this.UIElementData.currentAuthButtonname
+          .subscribe(name => authActionName = name);
+    
+        if(authActionName == "Sign In"){
+          this.authService.login();
+        }
+        else if(authActionName == "Sign Out"){
+          this.authService.logout();
+        }
+      }
   }
