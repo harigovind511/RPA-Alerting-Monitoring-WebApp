@@ -58,7 +58,7 @@
     "font-awesome": "^4.7.0",
     "hammerjs": "^2.0.8",
     "hellojs": "^2.0.0-4",
-    "jquery": "^3.4.1",
+    "jquery": "^3.5.0",
     "jszip": "^3.2.1",
     "ng-bootstrap": "^1.6.3",
     "ng-multiselect-dropdown": "^0.2.3",
