@@ -36,7 +36,7 @@
     "@syncfusion/ej2-data": "^17.1.51",
     "@types/filesaver": "0.0.30",
     "@wizishop/ng-wizi-bulma": "^7.0.10",
-    "angular": "^1.7.4",
+    "angular": "^1.8.3",
     "angular-bootstrap-md": "^7.5.1",
     "angular-datatables": "^7.0.0",
     "angular-font-awesome": "^3.1.2",
